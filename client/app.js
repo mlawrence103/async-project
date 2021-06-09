@@ -1,5 +1,16 @@
 import React from 'react';
+import Form from './form';
 
-export default App = () => {
-  return <h1>Can I Wipe With This?</h1>;
+const App = () => {
+  return (
+    <div>
+      <div class="header">
+        <img src="./logo.png" id="logo" />
+        <h1>Can I Wipe With This?</h1>
+      </div>
+      <Form />
+    </div>
+  );
 };
+
+export default App;

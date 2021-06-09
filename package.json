@@ -4,14 +4,17 @@
   "description": "identify if uploaded image is poison ivy",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
+    "build:dev": "npm run build -- --watch --mode=development",
     "start": "node server",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "start:dev": "npm run build:dev & npm run start-server",
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
   },
   "author": "Mabel Lawrence",
   "dependencies": {
     "@babel/core": "^7.14.3",
     "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
     "clarifai-nodejs-grpc": "^7.4.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
