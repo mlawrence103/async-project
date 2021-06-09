@@ -1,3 +1,17 @@
+body {
+  background-color: rgb(8, 70, 8);
+}
+
+#all-content {
+  border: 2px solid black;
+  padding-bottom: 3rem;
+  width: 50%;
+  margin-top: 5%;
+  margin-left: 25%;
+  margin-right: 25%;
+  background-color: white;
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -23,4 +37,9 @@
 
 #img-section label {
   margin-right: 1rem;
+}
+
+#output {
+  width: 12rem;
+  margin-bottom: 1.5rem;
 }

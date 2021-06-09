@@ -3,7 +3,7 @@ import Form from './form';
 
 const App = () => {
   return (
-    <div>
+    <div id="all-content">
       <div class="header">
         <img src="./logo.png" id="logo" />
         <h1>Can I Wipe With This?</h1>
