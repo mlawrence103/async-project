@@ -7,6 +7,9 @@ const App = () => {
       <div class="header">
         <img src="./logo.png" id="logo" />
         <h1>Can I Wipe With This?</h1>
+        <h3>
+          Don't wipe with poison ivy. Upload an image to check if you're safe
+        </h3>
       </div>
       <Form />
     </div>

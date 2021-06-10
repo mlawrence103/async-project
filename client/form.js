@@ -55,9 +55,6 @@ class Form extends React.Component {
     const prob = this.props.probability;
     return (
       <form id="form" onSubmit={this.handleSubmit}>
-        <h3>
-          Don't wipe with poison ivy. Upload an image to check if you're safe
-        </h3>
         <div class="img-section">
           <label htmlFor="image-upload">Image:</label>
           <input
