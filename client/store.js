@@ -31,7 +31,7 @@ export const idPoisonIvy = (image) => {
         'likelihood of poison ivy: ',
         res.data.data.concepts[0].value
       );
-      const poisonIvyProb = `${res.data.data.concepts[0].value * 100}%`;
+      const poisonIvyProb = res.data.data.concepts[0].value * 100;
       dispatch(_idPoisonIvy(poisonIvyProb));
     } catch (error) {
       console.log(error);

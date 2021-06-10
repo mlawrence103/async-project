@@ -30,6 +30,10 @@ body {
   text-align: center;
 }
 
+#form input {
+  margin-bottom: 1.5rem;
+}
+
 #img-section {
   display: flex;
 }
@@ -44,5 +48,24 @@ body {
 }
 
 #check-image-button {
-  margin-top: 1.5rem;
+  padding: 0.5rem;
+  width: 12rem;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+#check-image-button:hover {
+  background-color: rgb(159, 218, 159);
+}
+
+.result {
+  max-width: 75%;
+}
+
+#high-prob {
+  color: red;
+}
+
+#low-prob {
+  color: rgb(25, 95, 233);
 }

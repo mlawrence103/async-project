@@ -2057,6 +2057,8 @@ class Form extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   }
 
   loadImageLink(event) {
+    const imgElement = document.getElementById('output');
+    imgElement.src = event.target.value;
     console.log('load image link event listenter: ', event.target.value);
     const imgFile = event.target.value;
     this.setState({
@@ -2072,6 +2074,7 @@ class Form extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 
   render() {
     console.log('form props: ', this.props);
+    const prob = this.props.probability;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
       id: "form",
       onSubmit: this.handleSubmit
@@ -2084,9 +2087,7 @@ class Form extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       type: "file",
       accept: "image/*",
       onChange: this.loadImageFile
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-      id: "output"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       class: "img-section"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
       htmlFor: "image-url"
@@ -2094,9 +2095,17 @@ class Form extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       name: "image-url",
       type: "text",
       onChange: this.loadImageLink
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    })), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+      id: "output"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       id: "check-image-button"
-    }, "Find out if this is a good choice of TP"), this.props.probability ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Likelihood of poison ivy: ", this.props.probability) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null));
+    }, "Find out if this is a good choice of TP"), prob ? prob > 10 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+      className: "result",
+      id: "high-prob"
+    }, "Find a new leaf! ", this.props.probability, "% chance this is poison ivy") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+      className: "result",
+      id: "low-prob"
+    }, "Wipe away! ", this.props.probability, "% chance this is poison ivy") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null));
   }
 
 }
@@ -2166,7 +2175,7 @@ const idPoisonIvy = image => {
       const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/check-image', image);
       console.log('response in store: ', res.data.data.concepts);
       console.log('likelihood of poison ivy: ', res.data.data.concepts[0].value);
-      const poisonIvyProb = `${res.data.data.concepts[0].value * 100}%`;
+      const poisonIvyProb = res.data.data.concepts[0].value * 100;
       dispatch(_idPoisonIvy(poisonIvyProb));
     } catch (error) {
       console.log(error);

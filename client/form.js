@@ -37,6 +37,8 @@ class Form extends React.Component {
   }
 
   loadImageLink(event) {
+    const imgElement = document.getElementById('output');
+    imgElement.src = event.target.value;
     console.log('load image link event listenter: ', event.target.value);
     const imgFile = event.target.value;
     this.setState({ imgUrl: imgFile });
@@ -50,6 +52,7 @@ class Form extends React.Component {
 
   render() {
     console.log('form props: ', this.props);
+    const prob = this.props.probability;
     return (
       <form id="form" onSubmit={this.handleSubmit}>
         <h3>
@@ -64,7 +67,6 @@ class Form extends React.Component {
             onChange={this.loadImageFile}
           />
         </div>
-        <img id="output" />
         <div class="img-section">
           <label htmlFor="image-url">Image link: </label>
           <input
@@ -72,12 +74,22 @@ class Form extends React.Component {
             type="text"
             onChange={this.loadImageLink}
           ></input>
-        </div>
+        </div>{' '}
+        <img id="output" />
         <button id="check-image-button">
           Find out if this is a good choice of TP
         </button>
-        {this.props.probability ? (
-          <h1>Likelihood of poison ivy: {this.props.probability}</h1>
+        {prob ? (
+          prob > 10 ? (
+            <h1 className="result" id="high-prob">
+              Find a new leaf! {this.props.probability}% chance this is poison
+              ivy
+            </h1>
+          ) : (
+            <h1 className="result" id="low-prob">
+              Wipe away! {this.props.probability}% chance this is poison ivy
+            </h1>
+          )
         ) : (
           <div></div>
         )}
