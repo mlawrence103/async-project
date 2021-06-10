@@ -1,1 +1,6 @@
+# Illustrator file and video
 /Other_Assets
+
+# Compiled JS
+public/bundle.js
+public/bundle.js.map
