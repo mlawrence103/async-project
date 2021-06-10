@@ -14,6 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 //allow browser to request static assets from public directory
 app.use(express.static(path.join(__dirname, '../public')));
 
+//include routes
+app.use('/api', require('./api'));
+
 // sends index.html
 app.get('/', (req, res) => {
   res.render(path.join(__dirname, '../public/index.html'));

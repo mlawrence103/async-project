@@ -32,14 +32,17 @@ body {
 
 #img-section {
   display: flex;
-  margin-bottom: 1.5rem;
 }
 
-#img-section label {
+.img-section label {
   margin-right: 1rem;
 }
 
 #output {
   width: 12rem;
   margin-bottom: 1.5rem;
+}
+
+#check-image-button {
+  margin-top: 1.5rem;
 }
