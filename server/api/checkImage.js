@@ -24,18 +24,21 @@ router.post('/', (req, res, next) => {
     const testUrl =
       'https://www.friendsofthewildflowergarden.org/generaljpegs/Seasons/latesummer/hogpeanutleaf300.jpg';
     const testFilePath = 'Test_Images/Not_Poison_Ivy/virginia-creeper(6).jpeg';
-
+    console.log('>>>> request body in route: ', req.body);
     console.log('imgUrl in route: ', imgUrl);
 
-    // const imgBytes = fs.readFileSync(testFilePath);
-    // console.log('img in post route: ', imgBytes);
+    const body = req.body;
+    console.log(typeof body);
+
+    const imgBytes = fs.readFileSync(body);
+    console.log('img in post route: ', imgBytes);
 
     stub.PostModelOutputs(
       {
         model_id: 'aaa03c23b3724a16a56b629203edc62c', //general image model
         version_id: 'fde10322f3314b1fb08873537d96a219',
-        inputs: [{ data: { image: { url: `${imgUrl}` } } }],
-        // inputs: [{ data: { image: { base64: imgBytes } } }],
+        // inputs: [{ data: { image: { url: `${imgUrl}` } } }],
+        inputs: [{ data: { image: { base64: imgBytes } } }],
       },
       metadata,
       (err, response) => {
@@ -43,7 +46,7 @@ router.post('/', (req, res, next) => {
           throw new Error(err);
         }
         // console.log('HERE in stub method with respose: ', response);
-        console.log('response.outputs[0]: ', response.outputs[0]);
+        // console.log('response.outputs[0]: ', response.outputs[0]);
         if (response.status.code !== 10000) {
           throw new Error(
             'Post model outputs failed, status: ' + response.status.description

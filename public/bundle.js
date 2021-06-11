@@ -2159,10 +2159,20 @@ __webpack_require__.r(__webpack_exports__);
 
 function FormHooks() {
   const [img, setImg] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
+  const [imgFile, setImgFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const prob = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state);
   console.log('prob from useSelector hook: ', prob);
   console.log('returned from useDispatch: ', dispatch);
+
+  const loadImageFile = event => {
+    const file = event.target.files[0];
+    const imgPreview = URL.createObjectURL(file);
+    const imgElement = document.getElementById('output');
+    imgElement.src = imgPreview;
+    console.log('load image file event target: ', file);
+    setImgFile(file);
+  };
 
   const loadImageLink = event => {
     console.log('load image link event listenter: ', event.target.value);
@@ -2171,8 +2181,8 @@ function FormHooks() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log('image passing into idPoisonIvy: ', img);
-    dispatch((0,_store__WEBPACK_IMPORTED_MODULE_2__.idPoisonIvy)(img));
+    console.log('image passing into idPoisonIvy: ', imgFile);
+    dispatch((0,_store__WEBPACK_IMPORTED_MODULE_2__.idPoisonIvy)(imgFile));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
@@ -2181,14 +2191,22 @@ function FormHooks() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "img-section"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "image-upload"
+  }, "Image:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "image-upload",
+    type: "file",
+    accept: "image/*",
+    onChange: loadImageFile
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "img-section"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
     htmlFor: "image-url"
   }, "Image link: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     name: "image-url",
     type: "text",
     onChange: loadImageLink
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-    id: "output",
-    src: img
+    id: "output"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     id: "check-image-button"
   }, "Find out if this is a good choice of TP"), prob ? prob > 10 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
@@ -2244,10 +2262,18 @@ const _idPoisonIvy = probability => {
 };
 const idPoisonIvy = image => {
   //do you need to take out the "blob:" part of the img src?
-  console.log('HERE in id poisonIvy in store with image: ', image);
+  console.log('HERE in id poisonIvy in store with image: ', image); // const formData = new FormData();
+  // formData.append('image', image);
+  // console.log('formData: ', formData.get('image'));
+
   return async dispatch => {
     try {
-      const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/check-image', image);
+      // const res = await axios.post('/api/check-image', image);
+      const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/check-image', image, {
+        headers: {
+          'Content-Type': 'image'
+        }
+      });
       console.log('response in store: ', res.data.data.concepts);
       console.log('likelihood of poison ivy: ', res.data.data.concepts[0].value);
       const poisonIvyProb = res.data.data.concepts[0].value * 100;

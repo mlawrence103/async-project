@@ -23,9 +23,17 @@ export const _idPoisonIvy = (probability) => {
 export const idPoisonIvy = (image) => {
   //do you need to take out the "blob:" part of the img src?
   console.log('HERE in id poisonIvy in store with image: ', image);
+  // const formData = new FormData();
+  // formData.append('image', image);
+  // console.log('formData: ', formData.get('image'));
   return async (dispatch) => {
     try {
-      const res = await axios.post('/api/check-image', image);
+      // const res = await axios.post('/api/check-image', image);
+      const res = await axios.post('/api/check-image', image, {
+        headers: {
+          'Content-Type': 'image',
+        },
+      });
       console.log('response in store: ', res.data.data.concepts);
       console.log(
         'likelihood of poison ivy: ',
