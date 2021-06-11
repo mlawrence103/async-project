@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { ClarifaiStub, grpc } = require('clarifai-nodejs-grpc');
+const path = require('path');
 
 //read image files
 const fs = require('fs');
@@ -15,25 +16,26 @@ router.get('/', (req, res, next) => {
 });
 
 //get image url from form
-router.post('/', async (req, res, next) => {
+router.post('/', (req, res, next) => {
   console.log('HERE in post route');
   try {
     const imgUrl = Object.keys(req.body)[0];
+
     const testUrl =
       'https://www.friendsofthewildflowergarden.org/generaljpegs/Seasons/latesummer/hogpeanutleaf300.jpg';
+    const testFilePath = 'Test_Images/Not_Poison_Ivy/virginia-creeper(6).jpeg';
+
     console.log('imgUrl in route: ', imgUrl);
-    // const imgBytes = await fs.readFile(imgUrl, (err, data) => {
-    //   if (err) throw err;
-    //   console.log('fs read file data: ', data);
-    //   return data;
-    // });
-    // console.log('imgUrl in post route: ', imgBytes);
-    // console.log('metadata: ', metadata);
+
+    // const imgBytes = fs.readFileSync(testFilePath);
+    // console.log('img in post route: ', imgBytes);
+
     stub.PostModelOutputs(
       {
         model_id: 'aaa03c23b3724a16a56b629203edc62c', //general image model
         version_id: 'fde10322f3314b1fb08873537d96a219',
-        inputs: [{ data: { image: { url: imgUrl } } }],
+        inputs: [{ data: { image: { url: `${imgUrl}` } } }],
+        // inputs: [{ data: { image: { base64: imgBytes } } }],
       },
       metadata,
       (err, response) => {
@@ -41,7 +43,7 @@ router.post('/', async (req, res, next) => {
           throw new Error(err);
         }
         // console.log('HERE in stub method with respose: ', response);
-        // console.log('response.outputs[0]: ', response.outputs[0]);
+        console.log('response.outputs[0]: ', response.outputs[0]);
         if (response.status.code !== 10000) {
           throw new Error(
             'Post model outputs failed, status: ' + response.status.description

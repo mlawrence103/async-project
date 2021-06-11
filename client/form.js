@@ -17,7 +17,9 @@ class Form extends React.Component {
   //display image after uploading
   loadImageFile(event) {
     const img = document.getElementById('output');
+    // console.log('load image file target: ', event.target.files[0]);
     const imgFile = event.target.files[0];
+
     const reader = new FileReader();
     const form = this;
     reader.addEventListener(
@@ -25,15 +27,17 @@ class Form extends React.Component {
       function () {
         // convert image file to base64 string
         img.src = reader.result;
-        form.setState({ imgFile: img.src });
+        // console.log('image source in load file: ', img.src);
+        form.setState({ imgFile: reader.result.split(',')[1] });
       },
       false
     );
     if (imgFile) {
       reader.readAsDataURL(imgFile);
     }
-    // // img.src = URL.createObjectURL(event.target.files[0]);
-    // await this.setState({ imgUrl: img.src });
+
+    // img.src = URL.createObjectURL(event.target.files[0]);
+    // this.setState({ imgFile: img.src });
   }
 
   loadImageLink(event) {
@@ -45,9 +49,16 @@ class Form extends React.Component {
   }
 
   handleSubmit(event) {
+    let image = undefined;
+    if (this.state.imgUrl) {
+      image = this.state.imgUrl;
+    } else {
+      image = this.state.imgFile;
+    }
     event.preventDefault();
     console.log('HERE in form handle submit with state: ', this.state);
-    this.props.idPoisonIvy(this.state.imgUrl);
+    // console.log('image passing into idPoisonIvy: ', image);
+    this.props.idPoisonIvy(image);
   }
 
   render() {
@@ -71,7 +82,7 @@ class Form extends React.Component {
             type="text"
             onChange={this.loadImageLink}
           ></input>
-        </div>{' '}
+        </div>
         <img id="output" />
         <button id="check-image-button">
           Find out if this is a good choice of TP

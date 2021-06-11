@@ -2037,22 +2037,24 @@ class Form extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 
 
   loadImageFile(event) {
-    const img = document.getElementById('output');
+    const img = document.getElementById('output'); // console.log('load image file target: ', event.target.files[0]);
+
     const imgFile = event.target.files[0];
     const reader = new FileReader();
     const form = this;
     reader.addEventListener('load', function () {
       // convert image file to base64 string
-      img.src = reader.result;
+      img.src = reader.result; // console.log('image source in load file: ', img.src);
+
       form.setState({
-        imgFile: img.src
+        imgFile: reader.result.split(',')[1]
       });
     }, false);
 
     if (imgFile) {
       reader.readAsDataURL(imgFile);
-    } // // img.src = URL.createObjectURL(event.target.files[0]);
-    // await this.setState({ imgUrl: img.src });
+    } // img.src = URL.createObjectURL(event.target.files[0]);
+    // this.setState({ imgFile: img.src });
 
   }
 
@@ -2067,9 +2069,18 @@ class Form extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   }
 
   handleSubmit(event) {
+    let image = undefined;
+
+    if (this.state.imgUrl) {
+      image = this.state.imgUrl;
+    } else {
+      image = this.state.imgFile;
+    }
+
     event.preventDefault();
-    console.log('HERE in form handle submit with state: ', this.state);
-    this.props.idPoisonIvy(this.state.imgUrl);
+    console.log('HERE in form handle submit with state: ', this.state); // console.log('image passing into idPoisonIvy: ', image);
+
+    this.props.idPoisonIvy(image);
   }
 
   render() {
@@ -2095,7 +2106,7 @@ class Form extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       name: "image-url",
       type: "text",
       onChange: this.loadImageLink
-    })), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       id: "output"
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       id: "check-image-button"
