@@ -1987,6 +1987,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form */ "./client/form.js");
+/* harmony import */ var _form_w_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form_w_hooks */ "./client/form_w_hooks.js");
+
 
 
 
@@ -1994,11 +1996,11 @@ const App = () => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "all-content"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    class: "header"
+    className: "header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     src: "./logo.png",
     id: "logo"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Can I Wipe With This?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Don't wipe with poison ivy. Upload an image to check if you're safe")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_form__WEBPACK_IMPORTED_MODULE_1__.default, null));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Can I Wipe With This?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Don't wipe with poison ivy. Upload an image to check if you're safe")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_form_w_hooks__WEBPACK_IMPORTED_MODULE_2__.default, null));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -2135,6 +2137,68 @@ const mapDispatchToProps = dispatch => {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, mapDispatchToProps)(Form)); // export default Form;
+
+/***/ }),
+
+/***/ "./client/form_w_hooks.js":
+/*!********************************!*\
+  !*** ./client/form_w_hooks.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FormHooks)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./client/store.js");
+
+
+
+function FormHooks() {
+  const [img, setImg] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const prob = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state);
+  console.log('prob from useSelector hook: ', prob);
+  console.log('returned from useDispatch: ', dispatch);
+
+  const loadImageLink = event => {
+    console.log('load image link event listenter: ', event.target.value);
+    setImg(event.target.value);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    console.log('image passing into idPoisonIvy: ', img);
+    dispatch((0,_store__WEBPACK_IMPORTED_MODULE_2__.idPoisonIvy)(img));
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    id: "form",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "img-section"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+    htmlFor: "image-url"
+  }, "Image link: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    name: "image-url",
+    type: "text",
+    onChange: loadImageLink
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    id: "output",
+    src: img
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    id: "check-image-button"
+  }, "Find out if this is a good choice of TP"), prob ? prob > 10 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+    className: "result",
+    id: "high-prob"
+  }, "Find a new leaf! ", prob, "% chance this is poison ivy") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+    className: "result",
+    id: "low-prob"
+  }, "Wipe away! ", prob, "% chance this is poison ivy") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null));
+}
 
 /***/ }),
 

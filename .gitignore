@@ -1,6 +1,10 @@
 # Illustrator file and video
 /Other_Assets
 
+#images
+/Test_Images
+/Training_Images
+
 # Compiled JS
 public/bundle.js
 public/bundle.js.map
